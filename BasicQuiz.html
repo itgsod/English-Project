@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+.bgclr {background-color: white; color: black; font-weight: bold}
+ul {list-style-type:none}
+</style>
+</head>
+
+<body>
+
+<h3>Quiz Template</h3>
+
+<form name="quiz">
+1. Who wrote Hamlet?
+<ul>
+  <li><input type="radio" name="q1" value="Victor Hugo">Victor Hugo</input></li>
+  <li><input type="radio" name="q1" value="William Shakespeare">William Shakespeare</input></li>
+  <li><input type="radio" name="q1" value="Philippe Martinet">Philippe Martinet</input></li>
+</ul>
+
+2. To be or not to be?
+<ul>
+  <li><input type="radio" name="q2" value="That's is the question">That's is the question</li>
+  <li><input type="radio" name="q2" value="At the right place">At the right place</li>
+  <li><input type="radio" name="q2" value="To live or to be dead">To leave or to be dead</li>
+</ul>
+
+<button type="button" onClick="getScore(this.form)">Get Score</button>
+<button type="reset">Clear answers</button>
+<p>Score = <strong><input class="bgclr" type="text" size="5" name="percentage" disabled></strong><br><br>
+Correct answers:<br>
+<textarea class="bgclr" name="solutions" wrap="virtual" rows="2" cols="40">
+</textarea>
+</form>
+
+<script>
+
+// Insert number of questions
+var numQues = 2;
+
+// Insert number of choices in each question
+var numChoi = 3;
+
+// Insert number of questions displayed in answer area
+var answers = new Array(2);
+
+// Insert answers to questions
+answers[0] = "William Shakespeare";
+answers[1] = "To live or to be dead";
+
+
+function getScore(form) {
+  var score = 0;
+  var currElt;
+  var currSelection;
+  for (i=0; i<numQues; i++) {
+    currElt = i*numChoi;
+    for (j=0; j<numChoi; j++) {
+      currSelection = form.elements[currElt + j];
+      if (currSelection.checked) {
+        if (currSelection.value == answers[i]) {
+          score++;
+          break;
+        }
+      }
+    }
+  }
+  
+  score = Math.round(score/numQues*100);
+  form.percentage.value = score + "%";
+  var correctAnswers = "";
+  
+  for (i=1; i<=numQues; i++){
+    correctAnswers += i + ". " + answers[i-1] + "\r\n";
+  }
+  
+  form.solutions.value = correctAnswers;
+}
+
+</script>
+</body>
+</html>
